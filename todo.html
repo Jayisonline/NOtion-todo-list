@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> 
+
+    <!-- CSS only -->
+
+
+
+
+    <style>
+
+        /* *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+            height: 35%;
+            min-width: 340px;
+            margin: auto;
+            top: 50px;
+            left:0%;
+            right: 0;
+            padding: 30px 0;
+            border-radius: 8px;
+        } */
+
+        #root {
+
+
+            position: relative;
+            padding: 30px 15px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            width: 70%;
+            position: relative;
+            margin: auto;
+            margin-bottom: 100px;
+            width: 700px;
+        } 
+
+        /* #root input {
+            border-radius: ;
+            width: 70%;
+            height: 45px;
+            font-size: 15px;
+            border: 2px solid #d1d3d4;
+            padding: 12px;
+            color: #111111;
+            font-weight: 500;
+            position: relative;
+        }
+
+        #root input:focus{
+            outline: none;
+            border-color: #19A68C;
+        }
+
+        #root button{
+
+            position: relative;
+            float: right;
+            width: 60px;
+            height: 43px;
+            border-radius: 3px;
+            font-weight: 500;
+            font-size: 16px;
+            background: #19A68C;
+            color: #fff;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }*/
+        #root ul{
+            width: 500px;
+            margin: auto;
+            position: relative;
+            /* padding: auto; */
+            padding-left: 0;
+        }
+
+        #root ul li{
+            display: flex;
+            width: 500px;
+            position: relative;
+            margin-top: 30px;
+            background: #fff;
+            /* padding: 30px 20px; */
+            border-radius: 5px;
+            justify-content: space-between;
+            text-align: left;
+        } 
+
+        #root ul li button{
+            margin-left: 70px;
+            /* padding-top: 2px;
+             */
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: 0px;
+            /* position: left; */
+            /* align-items:left; */
+            /* float: left; */
+        }
+        
+        #root div div input{
+            margin: auto auto auto auto;
+            padding: auto;
+            width: 350px;
+            /* size: 600px; */
+            /* font-size: 20px; */
+        }
+        #root div div button{
+
+            margin: auto 0 auto 0px;
+        }
+
+        .new {
+            width: 500px;
+            margin: auto;
+        }
+
+    </style>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+
+    <title>Notion | Todo list</title>
+</head>
+<body>
+
+
+    <div>
+
+
+    <div >
+
+        <div>
+            <h1 class = "px-4 py-5 text-center fw-bold">
+                Notion
+            </h1>
+        </div>
+        <div id="root" class="px-4 py-5 text-center" ></div>
+
+    </div>
+    </div>
+
+
+    
+
+
+    <script type="text/babel">
+        // import 'todo.css';
+        class Hello extends React.Component {
+
+            constructor(props){
+                super(props);
+                this.state = {
+                    list: [],
+                    input: ""
+
+                };
+            }
+
+            render(){
+
+                
+                return (
+
+                    <div>
+
+                        
+                        <div className="d-md-flex new">
+                        <input autoFocus onChange={this.handleChange} value={this.state.input} className ="form-control"></input>
+                        <button onClick = {this.addTask} className = "btn btn-lg btn-light">Add task</button>
+
+                        </div>
+                        
+
+                        <ul>
+                            {this.state.list.map((list, i) =>
+
+                                <div>
+                                <li key = {i}>
+                                    {list}
+                                    <button onClick = {() => this.deleteTask(i)} className ="btn btn-lg btn-light">Delete</button>
+
+                                </li>   
+
+                                <hr/>
+                                </div>
+                            )}
+
+                        </ul>
+                    </div>
+                );
+            }
+
+            handleChange = (event) => {
+                this.setState({
+                    input: event.target.value
+                })
+            }
+
+            addTask = () => {
+                this.setState(state => ({
+                    list:[...state.list, state.input],
+                    input: ""
+                }))
+            }
+
+            deleteTask = (index) => {
+
+                this.setState (state => {
+                    const tasks = [...this.state.list];
+                    tasks.splice(index, 1);
+
+                    return {
+                        list:tasks
+                    }
+                });
+
+            }
+
+
+
+            componentDidMount() {
+                // const list = localStorage.getItem("list");
+                const items = JSON.parse(localStorage.getItem('list'));
+                console.log(Array.isArray(items));
+                if (items!==null){
+                this.setState({
+                    list:items
+                })
+                }
+                
+
+                window.addEventListener("beforeunload", () =>{
+                    localStorage.setItem("list",JSON.stringify(this.state.list))
+                })
+            }
+
+
+            
+        }
+
+
+        ReactDOM.render(<Hello />, document.getElementById('root'));
+    </script>
+</body>
+</html>

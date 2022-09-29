@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <title>Hello</title>
+</head>
+<body>
+
+    <div id="app"></div>
+
+    <script type = "text/babel">
+        class Counter extends React.Component {
+            
+
+            // constructor(props){
+            //     super(props);
+                // this.state = {
+                state = {
+                    count : 0,
+                    attr1 : "hi",
+                    attr2 : "bye"
+                };
+            // }
+
+
+            render(){
+                return (
+                    <div>
+                        <h1>{this.state.count}</h1>
+                        <button onClick = {this.decrement}>-</button>  
+                        <button onClick = {this.increment}>+</button>    
+
+                    </div>
+                );
+            }
+
+            increment = () => {
+                this.setState(state => ({
+                    count : state.count+1
+                }));
+            }
+
+            decrement = () => {
+                this.setState (state => ({
+                    count: state.count-1
+                }));
+            }
+
+
+            componentDidMount() {
+                const count = localStorage.getItem("count");
+                if (count!==null){
+                    this.setState({
+                        count:parseInt(count)
+                    });
+                }
+
+                window.addEventListener("beforeunload", () =>{
+                    localStorage.setItem("count", this.state.count)
+                })
+            }
+            
+
+            
+        }
+
+       
+
+        class App extends React.Component {
+            render(){
+                return(
+                    <div>
+                        <Counter />
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+    
+</body>
+</html>
